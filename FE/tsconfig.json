@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": ["dom", "dom.iterable", "es6"], // Added "es6" to align with Perspective's config
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": false,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext",
+    "moduleResolution": "node", // Retained "node" for compatibility; "bundler" is not compatible with CRA
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": false,
+    "jsx": "react-jsx", // Kept CRA's setting for React 17+ support
+
+    // Additions from Perspective config:
+    "alwaysStrict": true,
+    "noImplicitAny": false,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": false,
+    "strictNullChecks": false,
+    "downlevelIteration": true,
+    "pretty": true,
+    "sourceMap": true,
+    "experimentalDecorators": true
+  },
+  "include": ["src"],
+  "exclude": ["node_modules"]
+}
