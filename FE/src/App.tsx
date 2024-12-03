@@ -10,11 +10,20 @@ import "./App.css";
 
 // Adjust the config based on your dataset columns
 const config = {
-  group_by: ["location", "sku"], // Group by SKU to summarize data per product SKU
-  columns: ["order_placed_date", "channel"], // Columns to display
+  group_by: ["location", "sku"], // Groups rows first by location, then by SKU
+  split_by: ["order_placed_date", "channel"], // Splits columns by date (month/year) and channel
+  columns: ["quantity"], // Specifies which columns to show
   aggregates: {
-    quantity: "sum", // Summarize quantity
+    quantity: "sum", // Aggregate quantity by summing
+    location: "distinct count", // Keep a distinct count for location
+    sku: "distinct count", // Keep a distinct count for SKU
+    channel: "distinct count", // Keep a distinct count for channels
+    order_placed_date: "distinct count", // For grouping by order date
   },
+  sort: [
+    ["order_placed_date", "asc"], // Optionally, you can specify sorting, if needed
+  ],
+  row_pivots: ["location"],
 };
 
 // Function to fetch and return a Perspective table
