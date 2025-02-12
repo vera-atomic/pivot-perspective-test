@@ -11,7 +11,7 @@ import "./App.css";
 // Adjust the config based on your dataset columns
 const config = {
   group_by: ["location", "sku"], // Groups rows first by location, then by SKU
-  split_by: ["order_placed_date", "channel"], // Splits columns by date (month/year) and channel
+  split_by: ["order_placed_date"], // Splits columns by date (month/year) and channel
   columns: ["quantity"], // Specifies which columns to show
   aggregates: {
     quantity: "sum", // Aggregate quantity by summing
@@ -47,8 +47,22 @@ function App() {
       try {
         const table = await getTable(); // Get the Perspective table
         if (table && viewer.current) {
-          viewer.current.load(table); // Load the table into the Perspective viewer
-          viewer.current.restore(config); // Restore the desired configuration
+          await viewer.current.load(table).then(async () => {
+            const regular_table = document.querySelector("perspective-viewer-datagrid").shadowRoot?.querySelector("regular-table");
+            // @ts-ignore
+            regular_table.addStyleListener(() => {
+              const ths = regular_table.querySelectorAll("thead th");
+              ths.forEach((th: HTMLElement) => {
+                th.style.minWidth = "200px";
+                th.style.width = "200px";
+              });
+              const trs = regular_table.querySelectorAll("#psp-column-titles");
+              trs.forEach((tr: HTMLElement) => {
+                tr.style.display = "none";
+              });
+            });
+          });
+          await viewer.current.restore(config); // Restore the desired configuration
         }
       } catch (error) {
         console.error("Error loading table:", error);
